@@ -11,46 +11,78 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
     <style>
         body {
-            background: #f4f4f4;
             min-height: 100vh;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
 
         .timer-card {
-            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            border: none;
+            border-radius: 30px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .top-section {
+            background: linear-gradient(135deg, #0d6efd, #6610f2);
+            color: white;
+            padding: 35px 20px;
+            text-align: center;
+        }
+
+        .top-section h1 {
+            font-size: 34px;
+            font-weight: bold;
         }
 
         .timer-display {
-            font-size: 60px;
+            font-size: 70px;
             font-weight: bold;
-            word-break: break-word;
+            letter-spacing: 3px;
+            color: #0d6efd;
         }
 
-        .custom-btn {
-            min-width: 100px;
+        .input-box {
+            border-radius: 15px;
+            padding: 14px;
         }
 
-        /* Mobile */
+        .btn-custom {
+            border-radius: 15px;
+            padding: 12px;
+            font-weight: bold;
+        }
+
+        .icon-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            margin-bottom: 15px;
+            font-size: 30px;
+        }
 
         @media(max-width:576px) {
 
             .timer-display {
-                font-size: 38px;
+                font-size: 42px;
             }
 
-            .btn-group-mobile {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .custom-btn {
-                width: 100%;
-            }
-
-            .card-body {
-                padding: 25px 15px;
+            .top-section h1 {
+                font-size: 26px;
             }
         }
     </style>
@@ -59,87 +91,92 @@
 
 <body>
 
-    <!-- Navbar -->
+    <div class="card shadow-lg timer-card">
 
-    <nav class="navbar navbar-dark bg-dark">
+        <!-- Header -->
 
-        <div class="container-fluid">
+        <div class="top-section">
 
-            <a class="navbar-brand fw-bold" href="#">
+            <div class="icon-circle">
+                <i class="bi bi-stopwatch-fill"></i>
+            </div>
 
-                ⏳ Countdown Timer
-
-            </a>
+            <h1>
+                Countdown Timer
+            </h1>
 
         </div>
 
-    </nav>
+        <!-- Body -->
 
-    <!-- Main Section -->
+        <div class="card-body p-4 p-md-5">
 
-    <section class="container py-5">
+            <!-- Inputs -->
 
-        <div class="row justify-content-center">
+            <div class="row mb-4 g-3">
 
-            <div class="col-12 col-sm-10 col-md-7 col-lg-5">
+                <div class="col-12 col-md-6">
 
-                <div class="card shadow-lg border-0 timer-card">
+                    <input type="number" id="set-hour" class="form-control form-control-lg input-box"
+                        placeholder="Enter Hours" min="0">
 
-                    <div class="card-body text-center">
+                </div>
 
-                        <h3 class="mb-4 fw-bold">
-                            Set Timer
-                        </h3>
+                <div class="col-12 col-md-6">
 
-                        <!-- Inputs -->
+                    <input type="number" id="set-min" class="form-control form-control-lg input-box"
+                        placeholder="Enter Minutes" min="0" max="59">
 
-                        <div class="mb-4">
+                </div>
 
-                            <input type="number" id="set-hour" class="form-control mb-3" placeholder="Enter Hours"
-                                min="0">
+            </div>
 
-                            <input type="number" id="set-min" class="form-control" placeholder="Enter Minutes (0-59)"
-                                min="0" max="59">
+            <!-- Timer -->
 
-                        </div>
+            <div class="text-center timer-display mb-5">
 
-                        <!-- Timer -->
+                <span id="hour-ele">00</span>
+                :
+                <span id="min-ele">00</span>
+                :
+                <span id="sec-ele">00</span>
 
-                        <div class="timer-display mb-4">
+            </div>
 
-                            <span id="hour-ele">00</span>
-                            :
-                            <span id="min-ele">00</span>
-                            :
-                            <span id="sec-ele">00</span>
+            <!-- Buttons -->
 
-                        </div>
+            <div class="row g-3">
 
-                        <!-- Buttons -->
+                <div class="col-12 col-md-4">
 
-                        <div class="btn-group-mobile">
+                    <button class="btn btn-success btn-lg w-100 btn-custom" id="start-btn">
 
-                            <button class="btn btn-success custom-btn" id="start-btn">
+                        <i class="bi bi-play-fill"></i>
+                        Start
 
-                                Start
+                    </button>
 
-                            </button>
+                </div>
 
-                            <button class="btn btn-danger custom-btn" id="stop-btn">
+                <div class="col-12 col-md-4">
 
-                                Stop
+                    <button class="btn btn-danger btn-lg w-100 btn-custom" id="stop-btn">
 
-                            </button>
+                        <i class="bi bi-pause-fill"></i>
+                        Stop
 
-                            <button class="btn btn-warning custom-btn" id="reset-btn">
+                    </button>
 
-                                Reset
+                </div>
 
-                            </button>
+                <div class="col-12 col-md-4">
 
-                        </div>
+                    <button class="btn btn-warning btn-lg w-100 btn-custom" id="reset-btn">
 
-                    </div>
+                        <i class="bi bi-arrow-clockwise"></i>
+                        Reset
+
+                    </button>
 
                 </div>
 
@@ -147,13 +184,9 @@
 
         </div>
 
-    </section>
+    </div>
 
-    <script src="./script.js">
-
-
-
-    </script>
+    <script src="script.js"></script>
 
 </body>
 

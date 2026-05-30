@@ -75,8 +75,6 @@ function timer() {
 
 startBtn.addEventListener("click", function () {
   if (flag) {
-    // Get Input Time
-
     if (hour === 0 && min === 0 && sec === 0) {
       hour = Number(setHour.value) || 0;
       min = Number(setMin.value) || 0;
@@ -89,16 +87,23 @@ startBtn.addEventListener("click", function () {
         return;
       }
 
-      sec = 0;
+      // Countdown Logic
 
-      // Show exact inserted value
+      if (hour > 0 && min === 0) {
+        hour--;
+        min = 59;
+        sec = 59;
+      } else if (min > 0) {
+        min--;
+        sec = 59;
+      }
 
       updateDisplay();
     }
 
-    // Empty Validation
+    // Validation
 
-    if (hour === 0 && min === 0) {
+    if (hour === 0 && min === 0 && sec === 0) {
       alert("Please Enter Time");
 
       return;
