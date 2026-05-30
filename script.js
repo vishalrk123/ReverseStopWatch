@@ -1,17 +1,17 @@
+let hourEle = document.getElementById("hour-ele");
 let minEle = document.getElementById("min-ele");
 let secEle = document.getElementById("sec-ele");
-let msecEle = document.getElementById("msec-ele");
 
 let startBtn = document.getElementById("start-btn");
 let stopBtn = document.getElementById("stop-btn");
 let resetBtn = document.getElementById("reset-btn");
 
+let setHour = document.getElementById("set-hour");
 let setMin = document.getElementById("set-min");
-let setSec = document.getElementById("set-sec");
 
+let hour = 0;
 let min = 0;
 let sec = 0;
-let msec = 0;
 
 let interval = null;
 let flag = true;
@@ -21,19 +21,23 @@ let audio = new Audio(
   "https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg",
 );
 
+// Add zero
+function formatTime(time) {
+  return time <= 9 ? "0" + time : time;
+}
+
+// Update UI
+function updateDisplay() {
+  hourEle.textContent = formatTime(hour);
+  minEle.textContent = formatTime(min);
+  secEle.textContent = formatTime(sec);
+}
+
 // Timer Function
 function timer() {
-  // stop at exact zero
-  if (min === 0 && sec === 0 && msec <= 0) {
+  // Stop at zero
+  if (hour === 0 && min === 0 && sec === 0) {
     clearInterval(interval);
-
-    min = 0;
-    sec = 0;
-    msec = 0;
-
-    minEle.textContent = "00 : ";
-    secEle.textContent = "00 : ";
-    msecEle.textContent = "000";
 
     audio.play();
 
@@ -42,14 +46,7 @@ function timer() {
     return;
   }
 
-  msec -= 10;
-
-  // milliseconds complete
-  if (msec < 0) {
-    msec = 990;
-
-    sec--;
-  }
+  sec--;
 
   // seconds complete
   if (sec < 0) {
@@ -58,47 +55,44 @@ function timer() {
     min--;
   }
 
-  // update UI
-  msecEle.textContent = formatMsec(msec);
-  secEle.textContent = cancatZero(sec) + " : ";
-  minEle.textContent = cancatZero(min) + " : ";
-}
+  // minutes complete
+  if (min < 0) {
+    min = 59;
 
-// Add Zero
-function cancatZero(time) {
-  return time <= 9 ? "0" + time : time;
-}
-
-// Format Milliseconds
-function formatMsec(time) {
-  if (time <= 9) {
-    return "00" + time;
-  } else if (time <= 99) {
-    return "0" + time;
-  } else {
-    return time;
+    hour--;
   }
+
+  updateDisplay();
 }
 
 // START
 startBtn.addEventListener("click", function () {
   if (flag) {
-    // set fresh time
-    if (min === 0 && sec === 0 && msec === 0) {
+    // Set fresh values
+    if (hour === 0 && min === 0 && sec === 0) {
+      hour = Number(setHour.value) || 0;
       min = Number(setMin.value) || 0;
-      sec = Number(setSec.value) || 0;
 
-      msec = 990;
+      // minute validation
+      if (min > 59) {
+        alert("Minutes cannot be greater than 59");
+
+        return;
+      }
+
+      sec = 0;
     }
 
     // validation
-    if (min === 0 && sec === 0) {
+    if (hour === 0 && min === 0) {
       alert("Please Enter Time");
 
       return;
     }
 
-    interval = setInterval(timer, 10);
+    updateDisplay();
+
+    interval = setInterval(timer, 1000);
 
     flag = false;
   }
@@ -117,14 +111,12 @@ resetBtn.addEventListener("click", function () {
 
   flag = true;
 
+  hour = 0;
   min = 0;
   sec = 0;
-  msec = 0;
 
-  minEle.textContent = "00 : ";
-  secEle.textContent = "00 : ";
-  msecEle.textContent = "000";
+  updateDisplay();
 
+  setHour.value = "";
   setMin.value = "";
-  setSec.value = "";
 });
