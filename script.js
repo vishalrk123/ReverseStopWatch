@@ -39,85 +39,75 @@ function updateDisplay() {
 // Timer Function
 
 function timer() {
+  // Stop at Zero
 
-    // Stop at zero
+  if (hour === 0 && min === 0 && sec === 0) {
+    clearInterval(interval);
 
-    if (hour === 0 && min === 0 && sec === 0) {
+    audio.play();
 
-        clearInterval(interval);
+    flag = true;
 
-        audio.play();
+    return;
+  }
 
-        flag = true;
+  // Reduce seconds
 
-        return;
+  if (sec > 0) {
+    sec--;
+  } else {
+    // If seconds 0
+
+    if (min > 0) {
+      min--;
+      sec = 59;
+    } else if (hour > 0) {
+      hour--;
+      min = 59;
+      sec = 59;
     }
+  }
 
-    // If seconds become 0
-
-    if (sec === 0) {
-
-        // If minutes also 0
-
-        if (min === 0) {
-
-            if (hour > 0) {
-
-                hour--;
-                min = 59;
-                sec = 59;
-            }
-
-        } else {
-
-            min--;
-            sec = 59;
-        }
-
-    } else {
-
-        sec--;
-    }
-
-    updateDisplay();
+  updateDisplay();
 }
 
 // START
 
-startBtn.addEventListener("click", function(){
+startBtn.addEventListener("click", function () {
+  if (flag) {
+    // Get Input Time
 
-    if(flag){
+    if (hour === 0 && min === 0 && sec === 0) {
+      hour = Number(setHour.value) || 0;
+      min = Number(setMin.value) || 0;
 
-        if(hour === 0 && min === 0 && sec === 0){
+      // Validation
 
-            hour = Number(setHour.value) || 0;
-            min = Number(setMin.value) || 0;
+      if (min > 59) {
+        alert("Minutes cannot be greater than 59");
 
-            // Validation
+        return;
+      }
 
-            if(min > 59){
+      sec = 0;
 
-                alert("Minutes cannot be greater than 59");
+      // Show exact inserted value
 
-                return;
-            }
-
-            sec = 0;
-        }
-
-        if(hour === 0 && min === 0){
-
-            alert("Please Enter Time");
-
-            return;
-        }
-
-        updateDisplay();
-
-        interval = setInterval(timer, 1000);
-
-        flag = false;
+      updateDisplay();
     }
+
+    // Empty Validation
+
+    if (hour === 0 && min === 0) {
+      alert("Please Enter Time");
+
+      return;
+    }
+
+    interval = setInterval(timer, 1000);
+
+    flag = false;
+  }
 });
 
 // STOP
