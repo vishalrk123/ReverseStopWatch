@@ -16,55 +16,39 @@
     <style>
         body {
             min-height: 100vh;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #141e30, #243b55);
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         .timer-card {
             width: 100%;
-            max-width: 500px;
+            max-width: 520px;
             border: none;
-            border-radius: 30px;
+            border-radius: 25px;
             overflow: hidden;
-            background: white;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
         }
 
         .top-section {
-            background: linear-gradient(135deg, #0d6efd, #6610f2);
-            color: white;
-            padding: 35px 20px;
             text-align: center;
+            padding: 35px 20px;
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
         }
 
         .top-section h1 {
-            font-size: 34px;
-            font-weight: bold;
-        }
-
-        .timer-display {
-            font-size: 70px;
-            font-weight: bold;
-            letter-spacing: 3px;
-            color: #0d6efd;
-        }
-
-        .input-box {
-            border-radius: 15px;
-            padding: 14px;
-        }
-
-        .btn-custom {
-            border-radius: 15px;
-            padding: 12px;
             font-weight: bold;
         }
 
         .icon-circle {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.2);
             display: flex;
@@ -72,7 +56,35 @@
             justify-content: center;
             margin: auto;
             margin-bottom: 15px;
-            font-size: 30px;
+            font-size: 35px;
+        }
+
+        .timer-display {
+            font-size: 70px;
+            font-weight: bold;
+            text-align: center;
+            margin: 30px 0;
+            color: #00ffcc;
+            text-shadow: 0 0 20px rgba(0, 255, 204, 0.7);
+        }
+
+        .form-control {
+            border-radius: 15px;
+            padding: 14px;
+            font-size: 18px;
+        }
+
+        .btn-custom {
+            border-radius: 15px;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .music-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 15px;
         }
 
         @media(max-width:576px) {
@@ -81,8 +93,9 @@
                 font-size: 42px;
             }
 
-            .top-section h1 {
-                font-size: 26px;
+            .btn-custom {
+                width: 100%;
+                margin-bottom: 10px;
             }
         }
     </style>
@@ -91,7 +104,7 @@
 
 <body>
 
-    <div class="card shadow-lg timer-card">
+    <div class="card timer-card">
 
         <!-- Header -->
 
@@ -109,31 +122,41 @@
 
         <!-- Body -->
 
-        <div class="card-body p-4 p-md-5">
+        <div class="card-body p-4">
 
             <!-- Inputs -->
 
-            <div class="row mb-4 g-3">
+            <div class="row g-3 mb-4">
 
                 <div class="col-12 col-md-6">
 
-                    <input type="number" id="set-hour" class="form-control form-control-lg input-box"
-                        placeholder="Enter Hours" min="0">
+                    <input type="number" id="set-hour" class="form-control" placeholder="Enter Hours" min="0">
 
                 </div>
 
                 <div class="col-12 col-md-6">
 
-                    <input type="number" id="set-min" class="form-control form-control-lg input-box"
-                        placeholder="Enter Minutes" min="0" max="59">
+                    <input type="number" id="set-min" class="form-control" placeholder="Enter Minutes" min="0" max="59">
 
                 </div>
 
             </div>
 
+            <!-- Music -->
+
+            <div class="music-box mb-4 text-center">
+
+                <label class="mb-2 fw-bold">
+                    Select Alarm Music
+                </label>
+
+                <input type="file" id="music-file" class="form-control" accept="audio/*">
+
+            </div>
+
             <!-- Timer -->
 
-            <div class="text-center timer-display mb-5">
+            <div class="timer-display">
 
                 <span id="hour-ele">00</span>
                 :
@@ -145,11 +168,11 @@
 
             <!-- Buttons -->
 
-            <div class="row g-3">
+            <div class="row g-3 mt-3">
 
                 <div class="col-12 col-md-4">
 
-                    <button class="btn btn-success btn-lg w-100 btn-custom" id="start-btn">
+                    <button class="btn btn-success btn-custom w-100" id="start-btn">
 
                         <i class="bi bi-play-fill"></i>
                         Start
@@ -160,7 +183,7 @@
 
                 <div class="col-12 col-md-4">
 
-                    <button class="btn btn-danger btn-lg w-100 btn-custom" id="stop-btn">
+                    <button class="btn btn-danger btn-custom w-100" id="stop-btn">
 
                         <i class="bi bi-pause-fill"></i>
                         Stop
@@ -171,9 +194,9 @@
 
                 <div class="col-12 col-md-4">
 
-                    <button class="btn btn-warning btn-lg w-100 btn-custom" id="reset-btn">
+                    <button class="btn btn-warning btn-custom w-100" id="reset-btn">
 
-                        <i class="bi bi-arrow-clockwise"></i>
+                        <i class="bi bi-arrow-repeat"></i>
                         Reset
 
                     </button>
@@ -186,7 +209,11 @@
 
     </div>
 
-    <script src="script.js"></script>
+
+    <script src="./script.js">
+
+
+    </script>
 
 </body>
 
