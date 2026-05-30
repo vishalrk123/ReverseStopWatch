@@ -68,35 +68,40 @@ function timer() {
 
 // START
 
-startBtn.addEventListener("click", function () {
-  if (flag) {
-    if (hour === 0 && min === 0 && sec === 0) {
-      hour = Number(setHour.value) || 0;
-      min = Number(setMin.value) || 0;
+startBtn.addEventListener("click", function(){
 
-      // Validation
+    if(flag){
 
-      if (min > 59) {
-        alert("Minutes cannot be greater than 59");
+        if(hour === 0 && min === 0 && sec === 0){
 
-        return;
-      }
+            hour = Number(setHour.value) || 0;
+            min = Number(setMin.value) || 0;
 
-      sec = 0;
+            // Validation
+
+            if(min > 59){
+
+                alert("Minutes cannot be greater than 59");
+
+                return;
+            }
+
+            sec = 0;
+        }
+
+        if(hour === 0 && min === 0){
+
+            alert("Please Enter Time");
+
+            return;
+        }
+
+        updateDisplay();
+
+        interval = setInterval(timer, 1000);
+
+        flag = false;
     }
-
-    if (hour === 0 && min === 0) {
-      alert("Please Enter Time");
-
-      return;
-    }
-
-    updateDisplay();
-
-    interval = setInterval(timer, 1000);
-
-    flag = false;
-  }
 });
 
 // STOP
