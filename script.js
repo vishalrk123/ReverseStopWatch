@@ -39,31 +39,47 @@ function updateDisplay() {
 // Timer Function
 
 function timer() {
-  if (hour === 0 && min === 0 && sec === 0) {
-    clearInterval(interval);
 
-    audio.play();
+    // Stop at zero
 
-    flag = true;
+    if (hour === 0 && min === 0 && sec === 0) {
 
-    return;
-  }
+        clearInterval(interval);
 
-  sec--;
+        audio.play();
 
-  if (sec < 0) {
-    sec = 59;
+        flag = true;
 
-    min--;
-  }
+        return;
+    }
 
-  if (min < 0) {
-    min = 59;
+    // If seconds become 0
 
-    hour--;
-  }
+    if (sec === 0) {
 
-  updateDisplay();
+        // If minutes also 0
+
+        if (min === 0) {
+
+            if (hour > 0) {
+
+                hour--;
+                min = 59;
+                sec = 59;
+            }
+
+        } else {
+
+            min--;
+            sec = 59;
+        }
+
+    } else {
+
+        sec--;
+    }
+
+    updateDisplay();
 }
 
 // START
