@@ -82,7 +82,7 @@ startBtn.addEventListener("click", function () {
         return;
       }
 
-      sec = 59;
+      sec = 0;
     }
 
     if (hour === 0 && min === 0) {
