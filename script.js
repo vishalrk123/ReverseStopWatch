@@ -17,16 +17,19 @@ let interval = null;
 let flag = true;
 
 // Alarm Sound
+
 let audio = new Audio(
   "https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg",
 );
 
-// Add zero
+// Add Zero
+
 function formatTime(time) {
   return time <= 9 ? "0" + time : time;
 }
 
 // Update UI
+
 function updateDisplay() {
   hourEle.textContent = formatTime(hour);
   minEle.textContent = formatTime(min);
@@ -34,8 +37,10 @@ function updateDisplay() {
 }
 
 // Timer Function
+
 function timer() {
   // Stop at zero
+
   if (hour === 0 && min === 0 && sec === 0) {
     clearInterval(interval);
 
@@ -49,6 +54,7 @@ function timer() {
   sec--;
 
   // seconds complete
+
   if (sec < 0) {
     sec = 59;
 
@@ -56,6 +62,7 @@ function timer() {
   }
 
   // minutes complete
+
   if (min < 0) {
     min = 59;
 
@@ -66,24 +73,28 @@ function timer() {
 }
 
 // START
+
 startBtn.addEventListener("click", function () {
   if (flag) {
-    // Set fresh values
+    // Fresh values
+
     if (hour === 0 && min === 0 && sec === 0) {
       hour = Number(setHour.value) || 0;
       min = Number(setMin.value) || 0;
 
       // minute validation
+
       if (min > 59) {
         alert("Minutes cannot be greater than 59");
 
         return;
       }
 
-      sec = 0;
+      sec = 59;
     }
 
     // validation
+
     if (hour === 0 && min === 0) {
       alert("Please Enter Time");
 
@@ -99,6 +110,7 @@ startBtn.addEventListener("click", function () {
 });
 
 // STOP
+
 stopBtn.addEventListener("click", function () {
   clearInterval(interval);
 
@@ -106,6 +118,7 @@ stopBtn.addEventListener("click", function () {
 });
 
 // RESET
+
 resetBtn.addEventListener("click", function () {
   clearInterval(interval);
 
@@ -119,4 +132,16 @@ resetBtn.addEventListener("click", function () {
 
   setHour.value = "";
   setMin.value = "";
+});
+
+// Minute Validation
+
+setMin.addEventListener("input", function () {
+  if (this.value > 59) {
+    this.value = 59;
+  }
+
+  if (this.value < 0) {
+    this.value = 0;
+  }
 });
