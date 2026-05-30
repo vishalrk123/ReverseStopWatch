@@ -22,13 +22,13 @@ let audio = new Audio(
   "https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg",
 );
 
-// Add Zero
+// Format Time
 
 function formatTime(time) {
   return time <= 9 ? "0" + time : time;
 }
 
-// Update UI
+// Update Display
 
 function updateDisplay() {
   hourEle.textContent = formatTime(hour);
@@ -39,8 +39,6 @@ function updateDisplay() {
 // Timer Function
 
 function timer() {
-  // Stop at zero
-
   if (hour === 0 && min === 0 && sec === 0) {
     clearInterval(interval);
 
@@ -53,15 +51,11 @@ function timer() {
 
   sec--;
 
-  // seconds complete
-
   if (sec < 0) {
     sec = 59;
 
     min--;
   }
-
-  // minutes complete
 
   if (min < 0) {
     min = 59;
@@ -76,13 +70,11 @@ function timer() {
 
 startBtn.addEventListener("click", function () {
   if (flag) {
-    // Fresh values
-
     if (hour === 0 && min === 0 && sec === 0) {
       hour = Number(setHour.value) || 0;
       min = Number(setMin.value) || 0;
 
-      // minute validation
+      // Validation
 
       if (min > 59) {
         alert("Minutes cannot be greater than 59");
@@ -92,8 +84,6 @@ startBtn.addEventListener("click", function () {
 
       sec = 59;
     }
-
-    // validation
 
     if (hour === 0 && min === 0) {
       alert("Please Enter Time");
